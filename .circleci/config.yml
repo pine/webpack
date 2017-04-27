@@ -7,13 +7,13 @@ jobs:
 
     steps:
       - checkout
+      - restore_cache:
+          key: webpack-{{ checksum "yarn.lock" }}
       - run:
           name: install dependencies
           command: |
             yarn
             yarn link || true && yarn link webpack
-      - restore_cache:
-          key: webpack-{{ checksum "yarn.lock" }}
       - run:
           name: run tests
           command: |
