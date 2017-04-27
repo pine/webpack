@@ -2,27 +2,27 @@ version: 2
 jobs:
   build:
     working_directory: ~/workspace
-  docker:
-    image: node:4.8.2
+    docker:
+      image: node:4.8.2
 
-  steps:
-    - checkout
-    - run:
-        name: install dependencies
-        command: |
-          yarn
-          yarn link || true && yarn link webpack
-    - restore_cache:
-        key: webpack-{{ checksum "yarn.lock" }}
-    - run:
-        name: run tests
-        command: |
-          node -v
-          yarn --version
-          yarn run circleci:lint
-          yarn run circleci:test
-    - save_cache:
-        key: webpack-{{ checksum "yarn.lock" }}
-        paths:
-          - ~/workspace/node_modules
-          - ~/.cache/yarn/
+    steps:
+      - checkout
+      - run:
+          name: install dependencies
+          command: |
+            yarn
+            yarn link || true && yarn link webpack
+      - restore_cache:
+          key: webpack-{{ checksum "yarn.lock" }}
+      - run:
+          name: run tests
+          command: |
+            node -v
+            yarn --version
+            yarn run circleci:lint
+            yarn run circleci:test
+      - save_cache:
+          key: webpack-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/workspace/node_modules
+            - ~/.cache/yarn/
